@@ -1,6 +1,6 @@
 # ptjnb
 
-[![Github Actions Status](https://github.com/DerThorsten/ptjnb/workflows/Build/badge.svg)](https://github.com/DerThorsten/ptjnb/actions/workflows/build.yml)
+[![Github Actions Status](https://github.com/notebook-link/jupyter-plainb/workflows/Build/badge.svg)](https://github.com/notebook-link/jupyter-plainb/actions/workflows/build.yml)
 
 A JupyterLab extension to convert plaintext files to Jupyter notebooks
 

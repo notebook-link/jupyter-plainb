@@ -7,9 +7,9 @@
         "jupyterlab",
         "jupyterlab-extension"
     ],
-    "homepage": "https://github.com/DerThorsten/ptjnb",
+    "homepage": "https://github.com/notebook-link/jupyter-plainb",
     "bugs": {
-        "url": "https://github.com/DerThorsten/ptjnb/issues"
+        "url": "https://github.com/notebook-link/jupyter-plainb/issues"
     },
     "license": "BSD-3-Clause",
     "author": {
@@ -26,7 +26,7 @@
     "style": "style/index.css",
     "repository": {
         "type": "git",
-        "url": "https://github.com/DerThorsten/ptjnb.git"
+        "url": "https://github.com/notebook-link/jupyter-plainb.git"
     },
     "scripts": {
         "build:demo": "node script/build-demo.mjs",

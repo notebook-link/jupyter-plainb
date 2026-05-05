@@ -11,5 +11,5 @@ labextension_name: ptjnb
 project_short_description: A JupyterLab extension to convert plaintext files to jupyter
     notebooks
 python_name: ptjnb
-repository: https://github.com/DerThorsten/ptjnb
+repository: https://github.com/notebook-link/jupyter-plainb
 test: true
