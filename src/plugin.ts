@@ -3,7 +3,12 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
-import { showDialog, Dialog } from '@jupyterlab/apputils';
+import {
+  showDialog,
+  Dialog,
+  createToolbarFactory,
+  IToolbarWidgetRegistry
+} from '@jupyterlab/apputils';
 import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { MenuSvg } from '@jupyterlab/ui-components';
@@ -20,10 +25,23 @@ import type {
   IKernelspec
 } from './parsers';
 import { convertFile, autoConvert } from './convert';
-import { NotebookPanel, NotebookWidgetFactory } from '@jupyterlab/notebook';
+import {
+  INotebookTracker,
+  NotebookPanel,
+  NotebookWidgetFactory
+} from '@jupyterlab/notebook';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import { IEditorServices } from '@jupyterlab/codeeditor';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
+import { ITranslator, nullTranslator } from '@jupyterlab/translation';
 import { PlainTextNotebookModelFactory } from './model';
+
+/**
+ * Setting ID for the notebook panel toolbar configuration.
+ * We reuse the standard notebook toolbar settings so our panels
+ * get the exact same toolbar items.
+ */
+const PANEL_SETTINGS = '@jupyterlab/notebook-extension:panel';
 
 export const plugin: JupyterFrontEndPlugin<void> = {
   id: 'ptjnb:plugin',
@@ -32,14 +50,20 @@ export const plugin: JupyterFrontEndPlugin<void> = {
     IFileBrowserFactory,
     IRenderMimeRegistry,
     NotebookPanel.IContentFactory,
-    IEditorServices
+    IEditorServices,
+    IToolbarWidgetRegistry
   ],
+  optional: [INotebookTracker, ISettingRegistry, ITranslator],
   activate: async (
     app: JupyterFrontEnd,
     browserFactory: IFileBrowserFactory,
     rendermime: IRenderMimeRegistry,
     contentFactory: NotebookPanel.IContentFactory,
-    editorServices: IEditorServices
+    editorServices: IEditorServices,
+    toolbarRegistry: IToolbarWidgetRegistry,
+    notebookTracker: INotebookTracker | null,
+    settingRegistry: ISettingRegistry | null,
+    translator: ITranslator | null
   ) => {
     const { commands, contextMenu } = app;
 
@@ -53,6 +77,21 @@ export const plugin: JupyterFrontEndPlugin<void> = {
     const defaultKernelspec: IKernelspec | undefined = cfg.defaultKernelspec;
 
     const getCurrentBrowser = () => browserFactory.tracker.currentWidget;
+
+    // Create the toolbar factory using the standard notebook toolbar
+    // configuration. This reuses toolbar items registered under the
+    // 'Notebook' factory name (save, cell type, kernel name, etc.).
+    const toolbarFactory = settingRegistry
+      ? createToolbarFactory(
+          toolbarRegistry,
+          settingRegistry,
+          'Notebook',
+          PANEL_SETTINGS,
+          translator ?? nullTranslator
+        )
+      : undefined;
+
+    let ptjnbId = 0;
 
     (Object.keys(PARSERS) as ParserName[]).forEach(parserName => {
       const convertCommandId = `ptjnb:convert-${parserName}`;
@@ -77,20 +116,37 @@ export const plugin: JupyterFrontEndPlugin<void> = {
         new PlainTextNotebookModelFactory({ name: modelName, parser, serializer })
       );
 
+      const widgetFactory = new NotebookWidgetFactory({
+        name: widgetFactoryName,
+        modelName,
+        fileTypes: [fileTypeName],
+        defaultFor: [],
+        rendermime,
+        contentFactory,
+        mimeTypeService: editorServices.mimeTypeService,
+        toolbarFactory
+      });
+
+      // Inject each created panel into the notebook tracker so that
+      // all standard notebook commands (run cell, insert cell, cut/paste,
+      // keyboard shortcuts, etc.) recognise it as the active notebook.
+      // inject() is used instead of add() to avoid interfering with the
+      // standard notebook's save/restore logic.
+      widgetFactory.widgetCreated.connect((_sender, widget) => {
+        widget.id = widget.id || `ptjnb-${++ptjnbId}`;
+        widget.title.icon = undefined;
+
+        if (notebookTracker) {
+          notebookTracker.inject(widget);
+        }
+      });
+
       app.docRegistry.addWidgetFactory(
-        new NotebookWidgetFactory({
-          name: widgetFactoryName,
-          modelName,
-          fileTypes: [fileTypeName],
-          defaultFor: [],
-          rendermime,
-          contentFactory,
-          mimeTypeService: editorServices.mimeTypeService
-        }) as unknown as DocumentRegistry.WidgetFactory
+        widgetFactory as unknown as DocumentRegistry.WidgetFactory
       );
 
-      // Copy toolbar and other widget extensions from the standard Notebook
-      // factory. Deferred until after app.restored so all extensions are loaded.
+      // Copy any other widget extensions (e.g. TOC, search provider) from
+      // the standard Notebook factory. Deferred until after app.restored.
       void app.restored.then(() => {
         for (const ext of app.docRegistry.widgetExtensions('Notebook')) {
           app.docRegistry.addWidgetExtension(widgetFactoryName, ext);
