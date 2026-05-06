@@ -272,7 +272,9 @@ export const plugin: JupyterFrontEndPlugin<void> = {
             try {
               await contents.get(plainPath, { content: false });
               fileExists = true;
-            } catch {}
+            } catch {
+              // file does not exist
+            }
             if (fileExists) {
               const result = await showDialog({
                 title: 'Overwrite file?',
