@@ -21,7 +21,29 @@ export class PlainTextNotebookModel extends NotebookModel {
   }
 
   toString(): string {
-    const json = super.toJSON();
+    const json = super.toJSON() as any;
+
+    // Normalize cell sources to string[] as expected by plainb serializers.
+    // NotebookModel.toJSON() returns source as a single string, but plainb's
+    // joinSource() calls source.join("") which requires an array.
+    if (json.cells) {
+      for (const cell of json.cells) {
+        if (typeof cell.source === 'string') {
+          // Split into lines preserving trailing \n on each line
+          // (the nbformat convention for multiline string arrays).
+          // e.g. "a\nb\nc" → ["a\n", "b\n", "c"]
+          const lines = cell.source.split('\n');
+          cell.source = lines.map((line: string, i: number) =>
+            i < lines.length - 1 ? line + '\n' : line
+          );
+          // Remove a trailing empty string produced if source ends with \n
+          if (cell.source.length > 1 && cell.source[cell.source.length - 1] === '') {
+            cell.source.pop();
+          }
+        }
+      }
+    }
+
     return this._serializer(json as unknown as Notebook);
   }
 

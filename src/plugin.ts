@@ -131,17 +131,16 @@ export const plugin: JupyterFrontEndPlugin<void> = {
         translator: translator ?? nullTranslator
       });
 
-      // Add each created panel to the notebook tracker so that all standard
-      // notebook commands (run cell, insert cell, cut/paste, keyboard
-      // shortcuts, etc.) recognise it as the active notebook.
-      // We use add() rather than inject() because inject() skips the
-      // FocusTracker, which is what determines tracker.currentWidget.
+      // Register each created panel with the notebook tracker.
+      // Call inject() for the pool, then register with _focusTracker.
       widgetFactory.widgetCreated.connect((_sender, widget) => {
         widget.id = widget.id || `ptjnb-${++ptjnbId}`;
         widget.title.icon = undefined;
 
         if (notebookTracker) {
-          void (notebookTracker as NotebookTracker).add(widget);
+          const tracker = notebookTracker as NotebookTracker;
+          tracker.inject(widget);
+          (tracker as any)._focusTracker.add(widget);
         }
       });
 
