@@ -235,7 +235,6 @@ export const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     // Reverse conversion: .ipynb to plain text
-
     (Object.keys(SERIALIZERS) as ParserName[]).forEach(parserName => {
       const exportCommandId = `ptjnb:export-${parserName}`;
       const serializer = SERIALIZERS[parserName];
