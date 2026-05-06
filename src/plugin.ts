@@ -121,10 +121,13 @@ export const plugin: JupyterFrontEndPlugin<void> = {
         modelName,
         fileTypes: [fileTypeName],
         defaultFor: [],
+        preferKernel: true,
+        canStartKernel: true,
         rendermime,
         contentFactory,
         mimeTypeService: editorServices.mimeTypeService,
-        toolbarFactory
+        toolbarFactory,
+        translator: translator ?? nullTranslator
       });
 
       // Inject each created panel into the notebook tracker so that
