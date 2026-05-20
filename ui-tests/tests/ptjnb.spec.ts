@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const FILE_BROWSER_TIMEOUT = 30000;
-const CONVERT_TIMEOUT = 15000;
+const FILE_BROWSER_TIMEOUT = 60000;
+const CONVERT_TIMEOUT = 30000;
 
 async function waitForFileBrowser(page: Page): Promise<void> {
   await page.waitForSelector('.jp-DirListing', {

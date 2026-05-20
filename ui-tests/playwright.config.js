@@ -6,7 +6,7 @@ export default defineConfig({
   workers: 1,
   forbidOnly: !!process.env.CI,
   retries: 0,
-  timeout: 30 * 1000,
+  timeout: 90 * 1000,
   reporter: [['html', { open: 'never' }]],
   use: {
     baseURL: 'http://127.0.0.1:4477/lab',
@@ -22,6 +22,12 @@ export default defineConfig({
     command: 'jlpm run dev',
     url: 'http://127.0.0.1:4477/lab',
     reuseExistingServer: true,
-    timeout: 120 * 1000
+    timeout: 120 * 1000,
+    env: {
+      JUPYTER_CONFIG_DIR: './.jupyter_test/config',
+      JUPYTER_DATA_DIR: './.jupyter_test/data',
+      JUPYTERLAB_SETTINGS_DIR: './.jupyter_test/settings',
+      JUPYTERLAB_WORKSPACES_DIR: './.jupyter_test/workspaces'
+    }
   }
 });

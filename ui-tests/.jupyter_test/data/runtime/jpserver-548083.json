@@ -1,0 +1,13 @@
+{
+  "base_url": "/",
+  "hostname": "127.0.0.1",
+  "password": false,
+  "pid": 548083,
+  "port": 4477,
+  "root_dir": "/home/yahia/Documents/git/jupyter-plainb/demo/files",
+  "secure": false,
+  "sock": "",
+  "token": "",
+  "url": "http://127.0.0.1:4477/",
+  "version": "2.17.0"
+}

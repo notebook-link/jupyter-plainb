@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "jupyter lab --config=jupyter_config.py --port 4477 --ServerApp.token=\"\" --ServerApp.password=\"\" --ServerApp.disable_check_xsrf=True --ServerApp.root_dir=../demo/files --ServerApp.ip=127.0.0.1 --no-browser",
+    "dev": "jupyter lab --config=jupyter_server_config.py --port 4477 --ServerApp.token=\"\" --ServerApp.password=\"\" --ServerApp.disable_check_xsrf=True --ServerApp.root_dir=../demo/files --ServerApp.ip=127.0.0.1 --no-browser",
     "test": "npx playwright test",
     "test:update": "npx playwright test --update-snapshots"
   },
