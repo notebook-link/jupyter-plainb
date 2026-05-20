@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const FILE_BROWSER_TIMEOUT = 60000;
-const CONVERT_TIMEOUT = 30000;
+const FILE_BROWSER_TIMEOUT = 30000;
+const CONVERT_TIMEOUT = 15000;
 
 async function waitForFileBrowser(page: Page): Promise<void> {
   // Ensure the file browser tab is active (it can be collapsed on smaller viewports)
@@ -234,7 +234,7 @@ test.describe('ptjnb open-with', () => {
 
 test.describe('ptjnb export', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?reset');
     await waitForFileBrowser(page);
   });
 
