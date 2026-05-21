@@ -1,3 +1,7 @@
+# ---
+# language_info: {"name":"python","version":"3.14.4","mimetype":"text/x-python","codemirror_mode":{"name":"ipython","version":3},"pygments_lexer":"ipython3","nbconvert_exporter":"python","file_extension":".py"}
+# ---
+
 # %% [markdown]
 # # NumPy Basics — Percent Format
 #

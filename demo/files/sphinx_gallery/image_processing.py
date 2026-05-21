@@ -1,7 +1,10 @@
+# ---
+# kernelspec: {"name":"xpython","display_name":"Python 3.13 (XPython)","language":"python"}
+# language_info: {"name":"python","version":"3.14.4","mimetype":"text/x-python","codemirror_mode":{"name":"ipython","version":3},"pygments_lexer":"ipython3","nbconvert_exporter":"python","file_extension":".py"}
+# ---
+
 """
-==============================
-Image Processing with Skimage
-==============================
+# Image Processing with Skimage
 
 This example demonstrates basic image processing operations.
 It shows how to load, transform, and inspect images using scikit-image.
@@ -10,12 +13,8 @@ The Sphinx Gallery format uses a RST docstring as the first markdown cell,
 followed by ``# %%`` sections.
 """
 
-# Authors: Demo Author
-# SPDX-License-Identifier: MIT
-
 # %%
-# Loading an Image
-# ----------------
+# ## Loading an Image
 #
 # We start by creating a synthetic test image using NumPy,
 # since scikit-image may not be available in all environments.
@@ -33,8 +32,7 @@ print("Image shape:", image.shape)
 print("Value range:", image.min().round(3), "to", image.max().round(3))
 
 # %%
-# Applying a Threshold
-# --------------------
+# ## Applying a Threshold
 #
 # Thresholding converts a grayscale image to binary.
 # Pixels above the threshold become 1, others become 0.
@@ -47,11 +45,13 @@ total = binary.size
 print(f"Pixels above threshold: {int(above)} / {total} ({100*above/total:.1f}%)")
 
 # %%
-# Computing Statistics
-# --------------------
+# ## Computing Statistics
 #
 # Basic statistics help understand the image distribution.
 
 print("Mean:", image.mean().round(4))
 print("Std: ", image.std().round(4))
 print("Median:", np.median(image).round(4))
+
+# %%
+

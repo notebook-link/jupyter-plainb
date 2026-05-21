@@ -1,11 +1,10 @@
 ---
-jupytext:
-  text_representation:
-    format_name: myst
-kernelspec:
-  display_name: Python 3
-  name: python3
+kernelspec: {"name":"xpython","display_name":"Python 3.14 (XPython)","language":"python"}
+language_info: {"name":"python","version":"3.14.4","mimetype":"text/x-python","codemirror_mode":{"name":"ipython","version":3},"pygments_lexer":"ipython3","nbconvert_exporter":"python","file_extension":".py"}
+jupytext: 
 ---
+
++++
 
 # MyST Notebook Demo
 
@@ -19,7 +18,7 @@ and code cells use `{code-cell}` directives.
 The `+++` separator above started a new markdown cell.
 Now let's write a code cell using the MyST directive syntax.
 
-```{code-cell} ipython3
+```{code-cell}
 numbers = list(range(1, 11))
 squares = [n ** 2 for n in numbers]
 print("Numbers:", numbers)
@@ -32,7 +31,7 @@ print("Squares:", squares)
 
 MyST cells support metadata like tags, which control notebook behaviour.
 
-```{code-cell} ipython3
+```{code-cell}
 :tags: ["hide-input"]
 
 # This cell has the 'hide-input' tag — its source will be hidden in rendered output.
