@@ -60,7 +60,7 @@
     },
     "dependencies": {
         "@jupyterlab/application": "^4.0.0",
-        "plainb": "^1.2.0"
+        "plainb": "^1.4.0"
     },
     "devDependencies": {
         "@jupyterlab/builder": "^4.5.3",
