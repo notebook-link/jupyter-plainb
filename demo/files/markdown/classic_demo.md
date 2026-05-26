@@ -6,7 +6,7 @@ jupyter:
     language: python
   language_info:
     name: python
-    version: "3.14.0"
+    version: '3.14.0'
     mimetype: text/x-python
     codemirror_mode:
       name: ipython
