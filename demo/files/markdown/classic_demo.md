@@ -1,20 +1,19 @@
 ---
-kernelspec:
-  {
-    'name': 'xpython',
-    'display_name': 'Python 3.14 (XPython)',
-    'language': 'python'
-  }
-language_info:
-  {
-    'name': 'python',
-    'version': '3.14.4',
-    'mimetype': 'text/x-python',
-    'codemirror_mode': { 'name': 'ipython', 'version': 3 },
-    'pygments_lexer': 'ipython3',
-    'nbconvert_exporter': 'python',
-    'file_extension': '.py'
-  }
+jupyter:
+  kernelspec:
+    name: python3
+    display_name: Python 3 (ipykernel)
+    language: python
+  language_info:
+    name: python
+    version: "3.14.0"
+    mimetype: text/x-python
+    codemirror_mode:
+      name: ipython
+      version: 3
+    pygments_lexer: ipython3
+    nbconvert_exporter: python
+    file_extension: .py
 ---
 
 # Classic Markdown Notebook

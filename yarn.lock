@@ -8857,10 +8857,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plainb@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "plainb@npm:1.6.0"
-  checksum: 2bb386ecf594bd5b6f5665daa2e3d73031c6a499a854c626d46d4f392c4662b093620fa83b6ab4999ef31c0f5659378b599f76aa2ac3d325029cad959d072182
+"plainb@npm:1.7.0":
+  version: 1.7.0
+  resolution: "plainb@npm:1.7.0"
+  checksum: ef7b24f0cf92ceafc3674c8dd0fd2d562a62dec6a889a8cb7a67aae0560e30a5fa60d4fa4264130d04be0c4a9bf6fd37f46c2a32a67c2e46974a69799e95396b
   languageName: node
   linkType: hard
 
@@ -9088,7 +9088,7 @@ __metadata:
     eslint-plugin-prettier: ^5.0.0
     jest: ^29.2.0
     npm-run-all2: ^7.0.1
-    plainb: ^1.6.0
+    plainb: 1.7.0
     prettier: ^3.0.0
     rimraf: ^5.0.1
     source-map-loader: ^1.0.2
